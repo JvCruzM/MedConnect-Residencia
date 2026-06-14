@@ -94,19 +94,12 @@
 }
 
 .eventCard button {
-    background: #0f766e;
-    color: white;
     border: none;
     border-radius: 8px;
-    padding: 10px 16px;
+    padding: 10px 14px;
     font-weight: 700;
     cursor: pointer;
-    margin-top: auto;
-    align-self: flex-start;
-}
-
-.eventCard button:hover {
-    background: #0b5f59;
+    text-align: center;
 }
 
 .message {
@@ -154,24 +147,27 @@
 
 .detailsButton:hover {
     background: #0b5f59;
+    color: white;
 }
 
 .editButton {
-    background: #e0f2fe;
-    color: #075985;
+    background: #0f5f76;
+    color: white;
 }
 
 .editButton:hover {
-    background: #bae6fd;
+    background: #0b4a5c;
+    color: white;
 }
 
 .deleteButton {
-    background: #fee2e2;
-    color: #991b1b;
+    background: #8b1e1e;
+    color: white;
 }
 
 .deleteButton:hover {
-    background: #fecaca;
+    background: #6f1717;
+    color: white;
 }
 
 @media (max-width: 1024px) {

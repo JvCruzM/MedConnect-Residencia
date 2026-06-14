@@ -147,21 +147,23 @@
 }
 
 .editButton {
-    background: #e0f2fe;
-    color: #075985;
+    background: #0f5f76;
+    color: white;
 }
 
 .editButton:hover {
-    background: #bae6fd;
+    background: #0b4a5c;
+    color: white;
 }
 
 .deleteButton {
-    background: #fee2e2;
-    color: #991b1b;
+    background: #8b1e1e;
+    color: white;
 }
 
 .deleteButton:hover {
-    background: #fecaca;
+    background: #6f1717;
+    color: white;
 }
 
 @media (max-width: 1024px) {
