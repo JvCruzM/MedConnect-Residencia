@@ -1,23 +1,91 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     justify-content: center;
     padding: 40px 20px;
     background: #f7fbfa;
+    width: 100%;
+    min-height: 80vh;
+    font-family: Arial, sans-serif;
 }
 
 .card {
     width: 100%;
-    max-width: 800px;
+    max-width: 850px;
     background: white;
     padding: 32px;
     border-radius: 20px;
     box-shadow: 0 12px 30px rgba(15, 118, 110, 0.12);
+    border: 1px solid #e5e7eb;
 }
 
 h1 {
     text-align: center;
     color: #0f766e;
     margin-bottom: 24px;
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.message {
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.previewBox {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.previewBox p {
+    margin: 0 0 12px;
+    color: #0f766e;
+    font-weight: 700;
+}
+
+.previewBox img {
+    width: 160px;
+    height: 160px;
+    border-radius: 18px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    background: #e5e7eb;
 }
 
 .saveButton {
@@ -28,6 +96,76 @@ h1 {
     border: none;
     border-radius: 8px;
     padding: 14px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
+}
+
+.saveButton:hover {
+    background: #0b5f59;
+}
+
+.saveButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 36px 24px;
+    }
+
+    .card {
+        max-width: 820px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 32px 20px;
+        align-items: flex-start;
+    }
+
+    .card {
+        padding: 28px 22px;
+        border-radius: 18px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .previewBox img {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 24px 14px;
+    }
+
+    .card {
+        padding: 24px 18px;
+        border-radius: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .message {
+        font-size: 14px;
+    }
+
+    .previewBox img {
+        width: 120px;
+        height: 120px;
+    }
 }

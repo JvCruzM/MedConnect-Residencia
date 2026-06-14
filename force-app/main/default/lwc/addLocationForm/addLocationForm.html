@@ -3,26 +3,68 @@
         <div class="card">
             <h1>Adicionar Novo Local</h1>
 
-            <lightning-input label="Nome da Localização" name="Name" onchange={handleChange} required></lightning-input>
+            <template if:true={errorMessage}>
+                <div class="message error" role="alert">
+                    {errorMessage}
+                </div>
+            </template>
 
-            <lightning-input label="Rua" name="Street__c" onchange={handleChange}></lightning-input>
-            <lightning-input label="Ponto de Referência" name="Landmark__c" onchange={handleChange}></lightning-input>
-            <lightning-input label="Cidade" name="City__c" onchange={handleChange}></lightning-input>
-            <lightning-input label="Estado" name="State__c" onchange={handleChange}></lightning-input>
-            <lightning-input label="Código Postal" name="Postal_Code__c" onchange={handleChange}></lightning-input>
+            <template if:true={successMessage}>
+                <div class="message success" role="status">
+                    {successMessage}
+                </div>
+            </template>
 
-            <lightning-combobox 
-                name="Country__c" 
-                label="País" 
-                placeholder="Selecione o país" 
-                options={countryOptions} 
-                onchange={handleChange}>
-            </lightning-combobox>
+            <template if:true={warningMessage}>
+                <div class="message warning" role="status">
+                    {warningMessage}
+                </div>
+            </template>
 
-            <lightning-input type="checkbox" label="Verificado" name="Verified__c" onchange={handleChange}></lightning-input>
+            <div class="formGrid">
+                <div class="fullWidth">
+                    <lightning-input label="Nome da Localização" name="Name" value={locationData.Name}
+                        onchange={handleChange} required>
+                    </lightning-input>
+                </div>
 
-            <button class="saveButton" onclick={handleSave}>
-                Salvar Localização
+                <lightning-input type="text" label="Código Postal / CEP" name="Postal_Code__c"
+                    value={locationData.Postal_Code__c} placeholder="Ex: 50000-000" onchange={handlePostalCodeChange}>
+                </lightning-input>
+
+                <lightning-combobox name="Country__c" label="País" placeholder="Selecione o país"
+                    value={locationData.Country__c} options={countryOptions} onchange={handleChange} required>
+                </lightning-combobox>
+
+                <div class="fullWidth">
+                    <lightning-input label="Rua" name="Street__c" value={locationData.Street__c} onchange={handleChange}
+                        required>
+                    </lightning-input>
+                </div>
+
+                <lightning-input label="Cidade" name="City__c" value={locationData.City__c} onchange={handleChange}
+                    required>
+                </lightning-input>
+
+                <lightning-input label="Estado" name="State__c" value={locationData.State__c} onchange={handleChange}
+                    required>
+                </lightning-input>
+
+                <div class="fullWidth">
+                    <lightning-input label="Ponto de Referência" name="Landmark__c" value={locationData.Landmark__c}
+                        placeholder="Ex: próximo ao hospital, shopping ou estação" onchange={handleChange}>
+                    </lightning-input>
+                </div>
+
+                <template if:true={isFetchingCep}>
+                    <div class="fullWidth">
+                        <span class="cepStatus">Buscando CEP...</span>
+                    </div>
+                </template>
+            </div>
+
+            <button class="saveButton" onclick={handleSave} disabled={isSaving}>
+                {saveButtonLabel}
             </button>
         </div>
     </div>

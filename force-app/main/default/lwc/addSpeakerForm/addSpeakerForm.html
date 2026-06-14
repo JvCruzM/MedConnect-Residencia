@@ -1,23 +1,95 @@
 <template>
-  <div class="container">
-    <div class="card">
-      <h1>Adicionar Palestrante</h1>
+    <div class="container">
+        <div class="card">
+            <h1>Adicionar Palestrante</h1>
 
-      <lightning-input label="Nome Completo" name="Name" required></lightning-input>
+            <template if:true={errorMessage}>
+                <div class="message error" role="alert">
+                    {errorMessage}
+                </div>
+            </template>
 
-      <lightning-input type="email" label="E-mail" name="Email__c" required></lightning-input>
+            <template if:true={successMessage}>
+                <div class="message success" role="status">
+                    {successMessage}
+                </div>
+            </template>
 
-      <lightning-input type="tel" label="Telefone" name="Phone__c"></lightning-input>
+            <div class="formGrid">
+                <div class="fullWidth">
+                    <lightning-input
+                        label="Nome Completo"
+                        name="Name"
+                        value={speakerData.Name}
+                        onchange={handleChange}
+                        required>
+                    </lightning-input>
+                </div>
 
-      <lightning-input type="text" label="Especialização" name="Specialisation__c" placeholder="Ex: Cardiologia" required></lightning-input>
+                <lightning-input
+                    type="email"
+                    label="E-mail"
+                    name="Email__c"
+                    value={speakerData.Email__c}
+                    onchange={handleChange}
+                    required>
+                </lightning-input>
 
-      <lightning-input type="url" label="URL da Foto de Perfil" name="Profile_URL__c" placeholder="https://..."></lightning-input>
+                <lightning-input
+                    type="tel"
+                    label="Telefone"
+                    name="Phone__c"
+                    value={speakerData.Phone__c}
+                    placeholder="Ex: (81) 99999-9999"
+                    onchange={handleChange}>
+                </lightning-input>
 
-      <lightning-textarea label="Sobre o Palestrante" name="About_Me__c"></lightning-textarea>
+                <div class="fullWidth">
+                    <lightning-input
+                        type="text"
+                        label="Especialização"
+                        name="Specialisation__c"
+                        value={speakerData.Specialisation__c}
+                        placeholder="Ex: Cardiologia, Pneumologia, Nutrição"
+                        onchange={handleChange}
+                        required>
+                    </lightning-input>
+                </div>
 
-      <button class="saveButton" onclick={handleSave}>
-        Salvar Palestrante
-      </button>
+                <div class="fullWidth">
+                    <lightning-input
+                        type="url"
+                        label="URL da Foto de Perfil"
+                        name="Profile_URL__c"
+                        value={speakerData.Profile_URL__c}
+                        placeholder="https://..."
+                        onchange={handleChange}>
+                    </lightning-input>
+                </div>
+
+                <template if:true={hasPhotoUrl}>
+                    <div class="fullWidth">
+                        <div class="previewBox">
+                            <p>Prévia da imagem</p>
+                            <img src={profileUrl} alt="Prévia da foto do palestrante" />
+                        </div>
+                    </div>
+                </template>
+
+                <div class="fullWidth">
+                    <lightning-textarea
+                        label="Sobre o Palestrante"
+                        name="About_Me__c"
+                        value={speakerData.About_Me__c}
+                        placeholder="Escreva uma breve descrição sobre a experiência do palestrante."
+                        onchange={handleChange}>
+                    </lightning-textarea>
+                </div>
+            </div>
+
+            <button class="saveButton" onclick={handleSave} disabled={isSaving}>
+                {saveButtonLabel}
+            </button>
+        </div>
     </div>
-  </div>
 </template>

@@ -76,10 +76,17 @@ public with sharing class AdminDashboardController {
         Decimal attendeeTotal = (Decimal) attendeeResult.get('totalAttendees');
         stats.totalAttendees = attendeeTotal == null ? 0 : attendeeTotal.intValue();
         
-        stats.totalSpeakers = [
-            SELECT COUNT()
-            FROM Speaker__c
+        AggregateResult speakerResult = [
+        SELECT COUNT_DISTINCT(Speaker__c) totalSpeakers
+        FROM Event_Speaker__c
+        WHERE Medical_Event__r.Organizers__c = :organizerId
+        AND Speaker__c != null
         ];
+        
+        Object speakerTotalValue = speakerResult.get('totalSpeakers');
+        stats.totalSpeakers = speakerTotalValue == null
+            ? 0
+            : Integer.valueOf(String.valueOf(speakerTotalValue));
         
         stats.totalLocations = [
             SELECT COUNT()
