@@ -1,0 +1,87 @@
+<template>
+    <section class="locationsPage">
+
+        <div class="hero">
+            <div class="heroHeader">
+                <h1>Localizações</h1>
+
+                <template lwc:if={isOrganizer}>
+                    <a onclick={handleAddLocation} style="cursor: pointer; display: inline-block; margin-top: 10px;"
+                        class="primaryBtn">
+                        + Adicionar Local
+                    </a>
+                </template>
+            </div>
+            <p>
+                Conheça os locais onde os eventos do MedConnect acontecem.
+            </p>
+        </div>
+
+        <div class="locationsGrid">
+
+            <template if:true={locations.data}>
+
+                <template for:each={locations.data} for:item="location">
+
+                    <div class="locationCard" key={location.Id}>
+
+                        <div class="cardHeader">
+
+                            <h2>{location.Name}</h2>
+
+                            <template if:true={location.Verified__c}>
+                                <span class="verified">
+                                    ✓ Verificado
+                                </span>
+                            </template>
+
+                        </div>
+
+                        <div class="locationInfo">
+
+                            <p>
+                                <strong>Endereço:</strong>
+                                {location.Street__c}
+                            </p>
+
+                            <p>
+                                <strong>Cidade:</strong>
+                                {location.City__c}
+                            </p>
+
+                            <p>
+                                <strong>Estado:</strong>
+                                {location.State__c}
+                            </p>
+
+                            <p>
+                                <strong>País:</strong>
+                                {location.Country__c}
+                            </p>
+
+                            <p>
+                                <strong>CEP:</strong>
+                                {location.Postal_Code__c}
+                            </p>
+
+                            <p>
+                                <strong>Referência:</strong>
+                                {location.Landmark__c}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </template>
+
+            </template>
+
+            <template if:true={locations.error}>
+                <p>Não foi possível carregar os locais.</p>
+            </template>
+
+        </div>
+
+    </section>
+</template>

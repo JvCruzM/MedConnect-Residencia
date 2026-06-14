@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Company__c</fullName>
+    <description>Nome da empresa ou instituição à qual o participante está vinculado.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Informe o nome completo da organização, se aplicável.</inlineHelpText>
+    <label>Empresa</label>
+    <length>30</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

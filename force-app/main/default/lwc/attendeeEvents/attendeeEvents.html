@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="Medical Events" icon-name="standard:event">
+        <div class="slds-p-around_medium">
+            
+            <lightning-accordion active-section-name="upcoming">
+
+                <lightning-accordion-section name="upcoming" label="Upcoming Events">
+                    
+                    <template if:true={upcomingEvents.length}>
+                        <lightning-datatable
+                            key-field="Id"
+                            data={upcomingEvents}
+                            columns={columns}
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                    </template>
+                    
+                    <template if:false={upcomingEvents.length}>
+                        <p class="slds-text-color_weak">Nenhum evento futuro encontrado para este participante.</p>
+                    </template>
+
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="past" label="Past Events">
+                    
+                    <template if:true={pastEvents.length}>
+                        <lightning-datatable
+                            key-field="Id"
+                            data={pastEvents}
+                            columns={columns}
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                    </template>
+
+                    <template if:false={pastEvents.length}>
+                        <p class="slds-text-color_weak">Nenhum evento passado encontrado para este participante.</p>
+                    </template>
+
+                </lightning-accordion-section>
+
+            </lightning-accordion>
+
+        </div>
+    </lightning-card>
+</template>

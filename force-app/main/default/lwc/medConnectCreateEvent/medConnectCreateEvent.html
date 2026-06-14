@@ -1,0 +1,37 @@
+<template>
+    <section class="createPage">
+        <div class="formCard">
+            <h1>Criar Evento Médico</h1>
+            <p>Preencha as informações abaixo para cadastrar um novo evento.</p>
+
+            <lightning-record-edit-form
+                object-api-name="Medical_Event__c"
+                onsuccess={handleSuccess}
+                onerror={handleError}>
+
+                <lightning-messages></lightning-messages>
+
+                <lightning-input-field field-name="Name__c"></lightning-input-field>
+                <lightning-input-field field-name="Event_Type__c"></lightning-input-field>
+                <lightning-input-field field-name="Start_Date_Time__c"></lightning-input-field>
+                <lightning-input-field field-name="End_Date_Time__c"></lightning-input-field>
+                <lightning-input-field field-name="Max_Seats__c"></lightning-input-field>
+                <lightning-input-field field-name="Status__c"></lightning-input-field>
+                <lightning-input-field field-name="Event_Detail__c"></lightning-input-field>
+                <lightning-input-field field-name="Live__c"></lightning-input-field>
+
+                <button class="submitBtn" type="submit">
+                    Criar Evento
+                </button>
+            </lightning-record-edit-form>
+
+            <template if:true={successMessage}>
+                <p class="success">{successMessage}</p>
+            </template>
+
+            <template if:true={errorMessage}>
+                <p class="error">{errorMessage}</p>
+            </template>
+        </div>
+    </section>
+</template>

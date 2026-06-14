@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Location_When_InPerson</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Event_Type__c, &quot;In-Person&quot;),
+    ISBLANK(Location__c)
+)</errorConditionFormula>
+    <errorMessage>Eventos presenciais precisam de localização.</errorMessage>
+</ValidationRule>

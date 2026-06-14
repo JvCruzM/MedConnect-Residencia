@@ -1,0 +1,36 @@
+<template>
+    <section class="eventPage">
+        <div class="hero">
+            <h1>Eventos</h1>
+            <p>Explore eventos médicos, workshops e sessões de bem-estar.</p>
+        </div>
+
+        <div class="searchBox">
+            <label>Pesquisar Eventos</label>
+            <input type="text" placeholder="Busque por nome ou status..." oninput={handleSearch} />
+        </div>
+
+        <div class="eventGrid">
+            <template if:true={events.data}>
+                <template for:each={filteredEvents} for:item="event">
+                    <div class="eventCard" key={event.Id}>
+                        <span class="date">
+                            {event.formattedDate}
+                        </span>
+                        <h2>{event.Name__c}</h2>
+                        <p>{event.Status__c}</p>
+                        <strong>{event.Remaining_Seats__c} Vagas restantes</strong>
+
+                        <button data-id={event.Id} data-name={event.Name__c} onclick={handleViewDetails}>
+                            Ver detalhes
+                        </button>
+                    </div>
+                </template>
+            </template>
+
+            <template if:true={events.error}>
+                <p>Não foi possível carregar os eventos.</p>
+            </template>
+        </div>
+    </section>
+</template>

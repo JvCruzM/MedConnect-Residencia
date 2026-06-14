@@ -1,0 +1,41 @@
+<template>
+    <section class="speakers-section">
+        <div class="section-header">
+            <h2>Nossos Palestrantes</h2>
+            
+            <div class="header-actions">
+                <template if:true={isOrganizer}>
+                    <a style="cursor: pointer;" onclick={handleAddSpeaker}>
+                        + Adicionar Palestrante
+                    </a>
+                </template>
+            </div>
+        </div>
+
+        <div class="speaker-grid">
+            <template for:each={speakers} for:item="speaker">
+                <article key={speaker.Id} class="speaker-card">
+                    <img
+                        src={speaker.Profile_URL__c}
+                        alt={speaker.Name}
+                        class="speaker-photo"
+                    />
+
+                    <div class="speaker-info">
+                        <h3>{speaker.Name}</h3>
+
+                        <p class="specialisation">
+                            {speaker.Specialisation__c}
+                        </p>
+
+                        <div class="bio">
+                            <lightning-formatted-rich-text
+                                value={speaker.About_Me__c}>
+                            </lightning-formatted-rich-text>
+                        </div>
+                    </div>
+                </article>
+            </template>
+        </div>
+    </section>
+</template>

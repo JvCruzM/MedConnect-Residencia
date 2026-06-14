@@ -1,0 +1,23 @@
+<template>
+  <div class="container">
+    <div class="card">
+      <h1>Adicionar Palestrante</h1>
+
+      <lightning-input label="Nome Completo" name="Name" required></lightning-input>
+
+      <lightning-input type="email" label="E-mail" name="Email__c" required></lightning-input>
+
+      <lightning-input type="tel" label="Telefone" name="Phone__c"></lightning-input>
+
+      <lightning-input type="text" label="Especialização" name="Specialisation__c" placeholder="Ex: Cardiologia" required></lightning-input>
+
+      <lightning-input type="url" label="URL da Foto de Perfil" name="Profile_URL__c" placeholder="https://..."></lightning-input>
+
+      <lightning-textarea label="Sobre o Palestrante" name="About_Me__c"></lightning-textarea>
+
+      <button class="saveButton" onclick={handleSave}>
+        Salvar Palestrante
+      </button>
+    </div>
+  </div>
+</template>

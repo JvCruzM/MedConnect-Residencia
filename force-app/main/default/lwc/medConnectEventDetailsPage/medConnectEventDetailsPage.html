@@ -1,0 +1,77 @@
+<template>
+    <section class="detailPage">
+
+        <template lwc:if={hasEvent}>
+            <div class="detailCard">
+
+                <div class="detailHeader">
+                    <span class="statusBadge">{event.data.Status__c}</span>
+                    <h1>{event.data.Name__c}</h1>
+                    <p class="subtitle">
+                        Confira as principais informações deste evento médico.
+                    </p>
+                </div>
+
+                <div class="infoGrid">
+                    <div class="infoCard">
+                        <h3>Início</h3>
+                        <p>{formattedStartDate}</p>
+                    </div>
+
+                    <div class="infoCard">
+                        <h3>Fim</h3>
+                        <p>{formattedEndDate}</p>
+                    </div>
+
+                    <div class="infoCard">
+                        <h3>Vagas restantes</h3>
+                        <p>{event.data.Remaining_Seats__c}</p>
+                    </div>
+
+                    <div class="infoCard">
+                        <h3>Total de vagas</h3>
+                        <p>{event.data.Max_Seats__c}</p>
+                    </div>
+                </div>
+
+                <div class="description">
+                    <h2>Descrição do Evento</h2>
+                    <lightning-formatted-rich-text value={event.data.Event_Detail__c}>
+                    </lightning-formatted-rich-text>
+                </div>
+
+                <div class="actions">
+                    <a href="/perfil-do-participante" class="secondaryBtn">
+                        Voltar para Meus Eventos
+                    </a>
+
+                    <a href="/events" class="primaryBtn">
+                        Ver Todos os Eventos
+                    </a>
+                </div>
+
+            </div>
+        </template>
+
+        <template lwc:elseif={event.error}>
+            <div class="detailCard">
+                <h1>Erro ao carregar evento</h1>
+                <p>Não foi possível carregar as informações deste evento.</p>
+
+                <div class="actions">
+                    <a href="/perfil-do-participante" class="primaryBtn">
+                        Voltar para Meus Eventos
+                    </a>
+                </div>
+            </div>
+        </template>
+
+        <template lwc:else>
+            <div class="detailCard">
+                <h1>Carregando detalhes do evento...</h1>
+                <p>Aguarde enquanto buscamos as informações.</p>
+            </div>
+        </template>
+
+    </section>
+</template>

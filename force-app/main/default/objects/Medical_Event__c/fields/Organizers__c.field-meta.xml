@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Organizers__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Referência ao organizador responsável pelo evento.</description>
+    <inlineHelpText>Selecione o organizador responsável pela criação e gestão do evento.</inlineHelpText>
+    <label>Organizador</label>
+    <referenceTo>Clinic_Organizer__c</referenceTo>
+    <relationshipLabel>Eventos Médicos</relationshipLabel>
+    <relationshipName>Medical_Events</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

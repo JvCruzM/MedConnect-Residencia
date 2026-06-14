@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attendee__c</fullName>
+    <description>Referência ao participante vinculado ao evento médico.</description>
+    <inlineHelpText>Selecione o participante que estará presente no evento médico.</inlineHelpText>
+    <label>Participante</label>
+    <referenceTo>Attendee__c</referenceTo>
+    <relationshipLabel>Evento-Participantes</relationshipLabel>
+    <relationshipName>Event_Attendees</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

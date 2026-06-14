@@ -1,0 +1,43 @@
+<template>
+    <lightning-card title="New Attendee Registration" icon-name="standard:avatar">
+        <div class="slds-p-around_medium">
+            
+            <lightning-record-edit-form object-api-name="Attendee__c" onsuccess={handleSuccess}>
+                
+                <lightning-messages></lightning-messages>
+
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Name"></lightning-input-field>
+                        <lightning-input-field field-name="Email__c"></lightning-input-field>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Phone__c"></lightning-input-field>
+                        <lightning-input-field field-name="Company__c"></lightning-input-field>
+                    </div>
+                </div>
+
+                <div class="slds-m-top_small">
+                    <lightning-input-field field-name="Address__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-m-top_large slds-text-align_center">
+                    <lightning-button 
+                        label="Clear Form" 
+                        onclick={handleReset} 
+                        class="slds-m-right_small">
+                    </lightning-button>
+                    
+                    <lightning-button 
+                        label="Save Attendee" 
+                        variant="brand" 
+                        type="submit">
+                    </lightning-button>
+                </div>
+
+            </lightning-record-edit-form>
+
+        </div>
+    </lightning-card>
+</template>

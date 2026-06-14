@@ -1,0 +1,118 @@
+<template>
+    <section class="adminPage">
+
+        <div class="hero">
+            <h1>Painel Administrativo</h1>
+            <p>Gerencie os principais dados do MedConnect em um só lugar.</p>
+        </div>
+
+        <!-- Estatísticas -->
+        <template lwc:if={stats.data}>
+
+            <div class="statsGrid">
+
+                <div class="statCard">
+                    <span>Eventos</span>
+                    <h2>{stats.data.totalEvents}</h2>
+                    <p>Eventos cadastrados</p>
+                </div>
+
+                <div class="statCard">
+                    <span>Participantes</span>
+                    <h2>{stats.data.totalAttendees}</h2>
+                    <p>Inscrições registradas</p>
+                </div>
+
+                <div class="statCard">
+                    <span>Palestrantes</span>
+                    <h2>{stats.data.totalSpeakers}</h2>
+                    <p>Especialistas vinculados</p>
+                </div>
+
+                <div class="statCard">
+                    <span>Locais</span>
+                    <h2>{stats.data.totalLocations}</h2>
+                    <p>Localizações cadastradas</p>
+                </div>
+
+            </div>
+
+        </template>
+
+        <template lwc:if={stats.error}>
+            <div class="statCard">
+                <h3>Erro ao carregar estatísticas</h3>
+                <p>Verifique o Apex AdminDashboardController.</p>
+            </div>
+        </template>
+
+        <!-- Atalhos -->
+        <div class="adminGrid">
+
+            <div class="adminCard">
+                <h3>Gerenciar Eventos</h3>
+                <p>Crie, visualize e acompanhe eventos médicos.</p>
+                <a href="/events">Ver Eventos</a>
+            </div>
+
+            <div class="adminCard">
+                <h3>Criar Novo Evento</h3>
+                <p>Cadastre novos workshops, palestras e seminários.</p>
+                <a href="/add-event-form">Criar Evento</a>
+            </div>
+
+            <div class="adminCard">
+                <h3>Gerenciar Palestrantes</h3>
+                <p>Acompanhe os profissionais vinculados aos eventos.</p>
+                <a href="/speakers">Ver Palestrantes</a>
+            </div>
+
+            <div class="adminCard">
+                <h3>Localizações</h3>
+                <p>Consulte locais físicos e eventos virtuais.</p>
+                <a href="/locations">Ver Localizações</a>
+            </div>
+
+        </div>
+
+        <!-- Atividades Recentes -->
+        <section class="recentSection">
+
+            <h2>Atividades Recentes</h2>
+
+            <div class="activityList">
+
+                <template lwc:if={recentActivities.data}>
+
+                    <template for:each={recentActivities.data} for:item="activity">
+
+                        <div class="activityItem" key={activity.description}>
+
+                            <strong>{activity.title}</strong>
+
+                            <p>{activity.description}</p>
+
+                        </div>
+
+                    </template>
+
+                </template>
+
+                <template lwc:if={recentActivities.error}>
+
+                    <div class="activityItem">
+
+                        <strong>Erro ao carregar atividades</strong>
+
+                        <p>Verifique o método getRecentActivities no Apex.</p>
+
+                    </div>
+
+                </template>
+
+            </div>
+
+        </section>
+
+    </section>
+</template>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Name__c</fullName>
+    <description>Nome descritivo do evento médico.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Informe um nome claro para facilitar a identificação do evento.</inlineHelpText>
+    <label>Nome</label>
+    <length>255</length>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,23 @@
+<template>
+    <lightning-input
+        label={label}
+        value={selectedValue}
+        onchange={handleChange}>
+    </lightning-input>
+
+    <template if:true={records}>
+        <div class="slds-box slds-m-top_small">
+            <template for:each={records} for:item="record">
+                <div
+                    key={record.Id}
+                    data-id={record.Id}
+                    data-name={record.displayValue}
+                    onmousedown={handleSelect}
+                    class="slds-p-around_small slds-border_bottom"
+                    style="cursor: pointer;">
+                    {record.displayValue}
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,62 @@
+<template>
+  <div class="container">
+    <div class="card">
+
+      <h1>Criar Conta</h1>
+
+      <lightning-input label="Nome Completo" onchange={handleNameChange}>
+      </lightning-input>
+
+      <lightning-input label="Email" type="email" onchange={handleEmailChange}>
+      </lightning-input>
+
+      <label class="password-label">Senha</label>
+
+      <div class="password-wrapper">
+        <lightning-input type={passwordInputType} variant="label-hidden" value={password}
+          onchange={handlePasswordChange}>
+        </lightning-input>
+
+        <button type="button" class="eye-button" onclick={togglePasswordVisibility}
+          aria-label="Mostrar ou ocultar senha">
+          <lightning-icon icon-name={passwordIconName} size="x-small" alternative-text="Mostrar ou ocultar senha">
+          </lightning-icon>
+        </button>
+      </div>
+
+      <label class="password-label">Confirmar Senha</label>
+
+      <div class="password-wrapper">
+        <lightning-input type={confirmPasswordInputType} variant="label-hidden" value={confirmPassword}
+          onchange={handleConfirmPasswordChange}>
+        </lightning-input>
+
+        <button type="button" class="eye-button" onclick={toggleConfirmPasswordVisibility}
+          aria-label="Mostrar ou ocultar confirmação de senha">
+          <lightning-icon icon-name={confirmPasswordIconName} size="x-small"
+            alternative-text="Mostrar ou ocultar confirmação de senha">
+          </lightning-icon>
+        </button>
+      </div>
+
+      <lightning-combobox label="Você é?" value={roleValue} options={roleOptions} onchange={handleRoleChange}>
+      </lightning-combobox>
+
+      <template if:true={errorMessage}>
+        <p class="error-text" style="color: #ba0517; font-weight: bold; margin-bottom: 12px; text-align: center;">
+          {errorMessage}
+        </p>
+      </template>
+
+      <button class="primaryButton " onclick={handleRegister}>
+        Cadastrar
+      </button>
+
+      <p class="footerText">
+        Já possui conta?
+        <span style="cursor: pointer; font-weight: bold;" onclick={navigateToLogin}> Entrar</span>
+      </p>
+
+    </div>
+  </div>
+</template>

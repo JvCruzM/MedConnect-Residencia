@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Event_Detail__c</fullName>
+    <description>Armazena informações detalhadas sobre o evento médico, incluindo agenda, procedimentos, requisitos, observações e notas adicionais.</description>
+    <inlineHelpText>Insira informações detalhadas sobre o evento, como objetivos, instruções, cronograma, requisitos ou quaisquer observações adicionais para os participantes.</inlineHelpText>
+    <label>Detalhes do Evento</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

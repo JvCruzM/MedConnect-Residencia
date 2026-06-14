@@ -1,0 +1,84 @@
+<template>
+    <section class="profilePage">
+        <div class="profileCard">
+            <div class="avatar">{initials}</div>
+
+            <div>
+                <template lwc:if={hasUserData}>
+                    <h1>Olá, {userName}</h1>
+                    <p>Gerencie suas informações e acompanhe seus eventos inscritos.</p>
+                </template>
+
+                <template lwc:else>
+                    <h1>Perfil do Participante</h1>
+                    <p>Carregando informações da conta...</p>
+                </template>
+            </div>
+        </div>
+
+        <div class="infoGrid">
+            <div class="infoCard">
+                <h3>Nome</h3>
+                <p>{userName}</p>
+            </div>
+
+            <div class="infoCard">
+                <h3>Email</h3>
+                <p>{userEmail}</p>
+            </div>
+
+            <div class="infoCard">
+                <h3>Status</h3>
+                <p>Ativo</p>
+            </div>
+
+            <div class="infoCard">
+                <h3>Eventos Inscritos</h3>
+                <p>{totalEvents} evento(s)</p>
+            </div>
+        </div>
+
+        <section class="eventsSection">
+            <h2>Meus Eventos</h2>
+
+            <template lwc:if={hasEvents}>
+                <div class="eventList">
+                    <template for:each={events} for:item="event">
+                        <div class="eventItem" key={event.registrationId}>
+                            <h3>{event.name}</h3>
+
+                            <p>
+                                <strong>Data:</strong> {event.formattedStartDate}
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong> {event.status}
+                            </p>
+
+                            <button
+                                type="button"
+                                data-id={event.id}
+                                onclick={handleViewDetails}>
+                                Ver detalhes
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template lwc:elseif={eventsError}>
+                <div class="eventItem">
+                    <h3>Erro ao carregar eventos</h3>
+                    <p>Não foi possível buscar suas inscrições no momento.</p>
+                </div>
+            </template>
+
+            <template lwc:else>
+                <div class="eventItem">
+                    <h3>Nenhum evento encontrado</h3>
+                    <p>Você ainda não está inscrito em nenhum evento.</p>
+                </div>
+            </template>
+        </section>
+    </section>
+</template>

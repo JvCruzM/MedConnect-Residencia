@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Profile_URL__c</fullName>
+    <description>Armazena o link direto para a foto de perfil do palestrante, hospedada externamente. Essa URL é consumida pelo componente LWC &apos;speakerTile&apos; para renderizar o avatar na página de detalhes.</description>
+    <inlineHelpText>Insira o link completo (iniciando com https://) para a foto do palestrante. Dica: Encontre a imagem desejada na internet, clique com o botão direito e selecione &quot;Copiar endereço da imagem&quot;.</inlineHelpText>
+    <label>Perfil URL</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Log_Details__c</fullName>
+    <description>Contém o stack trace completo e informações detalhadas sobre o erro.</description>
+    <inlineHelpText>Inclui detalhes técnicos do erro, como mensagens e stack trace, para auxiliar na depuração.</inlineHelpText>
+    <label>Detalhes do Log</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

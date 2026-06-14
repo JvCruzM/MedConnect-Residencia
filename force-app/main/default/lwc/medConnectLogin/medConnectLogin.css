@@ -1,0 +1,79 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 80px;
+}
+
+.card {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(15, 118, 110, 0.12);
+}
+
+h1 {
+    color: #0f766e;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+.primaryButton {
+    width: 100%;
+    margin-top: 20px;
+    background: #0f766e;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.footerText {
+    margin-top: 20px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.footerText span {
+    color: #0f766e;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.eye-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 2;
+    line-height: 1;
+}
+
+.eye-button:focus {
+    outline: none;
+}
+
+.password-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.875rem;
+}

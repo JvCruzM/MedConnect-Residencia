@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>About_Me__c</fullName>
+    <description>Área de texto rico destinada a armazenar a biografia profissional, qualificações e especializações do palestrante. O conteúdo é exibido com formatação no componente LWC &apos;speakerTile&apos;.</description>
+    <inlineHelpText>Escreva uma breve biografia e destaque as especializações do palestrante. Fique à vontade para usar formatação (como negrito, itálico e tópicos em lista) para deixar o perfil mais atraente e fácil de ler.</inlineHelpText>
+    <label>Sobre Mim</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

@@ -1,0 +1,42 @@
+<template>
+    <section class="detailPage">
+        <template if:true={event.data}>
+            <div class="detailCard">
+                <span class="status">{event.data.Status__c}</span>
+
+                <h1>{event.data.Name__c}</h1>
+
+                <lightning-formatted-rich-text value={event.data.Event_Detail__c}>
+                </lightning-formatted-rich-text>
+
+                <div class="infoGrid">
+                    <div>
+                        <strong>Início</strong>
+                        <p>{formattedStartDate}</p>
+                    </div>
+
+                    <div>
+                        <strong>Fim</strong>
+                        <p>{formattedEndDate}</p>
+                    </div>
+
+                    <div>
+                        <strong>Vagas restantes</strong>
+                        <p>{event.data.Remaining_Seats__c}</p>
+                    </div>
+
+                    <div>
+                        <strong>Total de vagas</strong>
+                        <p>{event.data.Max_Seats__c}</p>
+                    </div>
+                </div>
+
+                <button onclick={handleRegister}>Inscrever-se</button>
+            </div>
+        </template>
+
+        <template if:true={event.error}>
+            <p>Não foi possível carregar os detalhes do evento.</p>
+        </template>
+    </section>
+</template>

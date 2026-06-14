@@ -1,0 +1,36 @@
+<template>
+    <header class="header">
+        <div class="logo">
+            <img src={logoUrl} alt="Logo MedConnect" class="logo-image" />
+            <span>MedConnect</span>
+        </div>
+
+        <nav class="nav">
+            <a href="/">Início</a>
+
+            <template if:true={isAttendee}>
+                <a href="/events">Eventos Médicos</a>
+                <a href="/speakers">Palestrantes</a>
+                <a href="/locations">Localizações</a>
+
+                <template if:false={isGuestUser}>
+                    <a href="/perfil-do-participante">Meus Eventos</a>
+                </template>
+            </template>
+
+            <template if:true={isOrganizer}>
+                <a href="/dashboard-adm">Gerenciar Eventos</a>
+                <a href="/speakers">Base de Palestrantes</a>
+                <a href="/locations">Base de Locais</a>
+            </template>
+
+            <template if:true={isGuestUser}>
+                <a style="cursor: pointer;" onclick={handleLogin}>Login</a>
+            </template>
+            <template if:false={isGuestUser}>
+                <a style="cursor: pointer;" onclick={handleLogout}>Logout</a>
+            </template>
+        </nav>
+
+    </header>
+</template>

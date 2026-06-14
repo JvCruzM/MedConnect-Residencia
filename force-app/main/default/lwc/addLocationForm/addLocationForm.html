@@ -1,0 +1,29 @@
+<template>
+    <div class="container">
+        <div class="card">
+            <h1>Adicionar Novo Local</h1>
+
+            <lightning-input label="Nome da Localização" name="Name" onchange={handleChange} required></lightning-input>
+
+            <lightning-input label="Rua" name="Street__c" onchange={handleChange}></lightning-input>
+            <lightning-input label="Ponto de Referência" name="Landmark__c" onchange={handleChange}></lightning-input>
+            <lightning-input label="Cidade" name="City__c" onchange={handleChange}></lightning-input>
+            <lightning-input label="Estado" name="State__c" onchange={handleChange}></lightning-input>
+            <lightning-input label="Código Postal" name="Postal_Code__c" onchange={handleChange}></lightning-input>
+
+            <lightning-combobox 
+                name="Country__c" 
+                label="País" 
+                placeholder="Selecione o país" 
+                options={countryOptions} 
+                onchange={handleChange}>
+            </lightning-combobox>
+
+            <lightning-input type="checkbox" label="Verificado" name="Verified__c" onchange={handleChange}></lightning-input>
+
+            <button class="saveButton" onclick={handleSave}>
+                Salvar Localização
+            </button>
+        </div>
+    </div>
+</template>

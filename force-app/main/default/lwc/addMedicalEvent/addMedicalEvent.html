@@ -1,0 +1,60 @@
+<template>
+
+    <lightning-card title="Create Medical Event">
+
+        <div class="slds-p-around_medium">
+
+            <lightning-input
+                label="Name"
+                onchange={handleName}>
+            </lightning-input>
+
+            <c-lookup
+                label="Organizer"
+                object-name="Clinic_Organizer__c"
+                field-name="Name"
+                onlookupselected={handleOrganizer}>
+            </c-lookup>
+
+            <lightning-input
+                type="datetime"
+                label="Start Date"
+                onchange={handleStartDate}>
+            </lightning-input>
+
+            <lightning-input
+                type="datetime"
+                label="End Date"
+                onchange={handleEndDate}>
+            </lightning-input>
+
+            <lightning-input
+                type="number"
+                label="Max Attendees"
+                onchange={handleMaxAttendees}>
+            </lightning-input>
+
+            <c-lookup
+                label="Location"
+                object-name="Location__c"
+                field-name="Name"
+                onlookupselected={handleLocation}>
+            </c-lookup>
+
+            <lightning-input-rich-text
+                label="Event Detail"
+                onchange={handleEventDetail}>
+            </lightning-input-rich-text>
+
+            <lightning-button
+                label="Create Event"
+                variant="brand"
+                class="slds-m-top_medium"
+                onclick={createEvent}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+
+</template>

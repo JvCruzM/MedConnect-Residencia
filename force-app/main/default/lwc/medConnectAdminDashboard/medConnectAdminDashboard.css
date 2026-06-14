@@ -1,0 +1,238 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.adminPage {
+    background: #f7fbfa;
+    min-height: 80vh;
+    padding: 50px;
+    font-family: Arial, sans-serif;
+    color: #111827;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.hero {
+    margin-bottom: 36px;
+}
+
+.hero h1 {
+    color: #0f3b66;
+    font-size: 42px;
+    margin-bottom: 10px;
+    line-height: 1.15;
+}
+
+.hero p {
+    color: #4b5563;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 36px;
+}
+
+.statCard,
+.adminCard,
+.activityItem {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 12px 28px rgba(15, 118, 110, 0.08);
+    min-width: 0;
+}
+
+.statCard span {
+    color: #0f766e;
+    font-weight: 700;
+}
+
+.statCard h2 {
+    font-size: 38px;
+    color: #0f3b66;
+    margin: 10px 0;
+    line-height: 1.1;
+}
+
+.statCard p,
+.adminCard p,
+.activityItem p {
+    color: #4b5563;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.adminGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 40px;
+}
+
+.adminCard {
+    display: flex;
+    flex-direction: column;
+}
+
+.adminCard h3 {
+    color: #111827;
+    margin-bottom: 10px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.adminCard p {
+    margin-bottom: 22px;
+}
+
+.adminCard a {
+    display: inline-block;
+    margin-top: auto;
+    background: #0f766e;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.adminCard a:hover {
+    background: #0b5f59;
+}
+
+.recentSection h2 {
+    color: #0f3b66;
+    font-size: 28px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.activityList {
+    display: grid;
+    gap: 16px;
+}
+
+.activityItem strong {
+    color: #0f766e;
+    display: block;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 1024px) {
+    .adminPage {
+        padding: 40px 32px;
+    }
+
+    .statsGrid,
+    .adminGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 768px) {
+    .adminPage {
+        padding: 32px 24px;
+    }
+
+    .hero {
+        margin-bottom: 28px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .statsGrid,
+    .adminGrid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .statCard,
+    .adminCard,
+    .activityItem {
+        padding: 20px;
+    }
+
+    .statCard h2 {
+        font-size: 34px;
+    }
+
+    .adminCard p {
+        margin-bottom: 24px;
+    }
+
+    .adminCard a {
+        width: 100%;
+    }
+
+    .recentSection h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .adminPage {
+        padding: 28px 16px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .statCard,
+    .adminCard,
+    .activityItem {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .statCard h2 {
+        font-size: 30px;
+    }
+
+    .adminCard h3 {
+        font-size: 18px;
+    }
+
+    .adminCard p {
+        margin-bottom: 20px;
+    }
+
+    .adminCard a {
+        padding: 11px 14px;
+        font-size: 14px;
+    }
+
+    .recentSection h2 {
+        font-size: 22px;
+    }
+}

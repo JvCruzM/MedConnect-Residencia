@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Endereço associado ao participante, selecionado a partir de registros de localização existentes.</description>
+    <inlineHelpText>Busque e selecione um endereço previamente cadastrado. Caso não exista, verifique a necessidade de criar um novo registro de localização.</inlineHelpText>
+    <label>Endereço</label>
+    <referenceTo>Location__c</referenceTo>
+    <relationshipName>Attendees</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

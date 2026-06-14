@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Endereço associado ao organizador, vinculado a um registro de localização existente.</description>
+    <inlineHelpText>Busque e selecione um endereço previamente cadastrado. Caso não exista, avalie a criação de um novo registro de localização.</inlineHelpText>
+    <label>Endereço</label>
+    <referenceTo>Location__c</referenceTo>
+    <relationshipLabel>Organizadores da Clínica</relationshipLabel>
+    <relationshipName>Clinic_Organizers</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

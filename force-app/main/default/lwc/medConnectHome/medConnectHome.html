@@ -1,0 +1,94 @@
+<template>
+    <div class="page">
+        <section class="hero">
+            <div class="heroText">
+                <h1>Bem-vindo ao MedConnect</h1>
+                <p>
+                    Promovendo a conexão entre pacientes, profissionais da saúde e palestrantes por meio de eventos médicos, workshops e sessões de bem-estar.
+                </p>
+                <button onclick={handleNavigateToEvents}>Explorar Eventos</button>
+            </div>
+
+            <div class="heroImage">
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef" alt="Profissionais de saúde" />
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="sectionHeader">
+                <h2>Próximos Eventos Médicos</h2>
+                <a onclick={handleNavigateToEvents} style="cursor: pointer;">Ver Todos os Eventos</a>
+            </div>
+
+            <div class="cards">
+                <template if:true={events.data}>
+                    <template for:each={formattedEvents} for:item="event">
+                        <div class="card" key={event.Id}>
+                            <span>{event.formattedStartDate}</span>
+                            <h3>{event.Name__c}</h3>
+                            <p>Evento MedConnect</p>
+                            <strong>{event.Remaining_Seats__c} vagas restantes</strong>
+                        </div>
+                    </template>
+                </template>
+
+                <template if:true={events.error}>
+                    <p>Não foi possível carregar os eventos.</p>
+                </template>
+            </div>
+        </section>
+
+<section class="section">
+            <div class="sectionHeader">
+                <h2>Palestrantes em Destaque</h2>
+                <a onclick={handleNavigateToSpeakers} style="cursor: pointer;">Ver Todos os Palestrantes</a>
+            </div>
+
+            <div class="speakers">
+                <template if:true={speakers.data}>
+                    <template for:each={speakers.data} for:item="speaker">
+                        <div class="speaker" key={speaker.Id}>
+                            <img src={speaker.Profile_URL__c} alt="Palestrante" class="speaker-img" />
+                            
+                            <h3>{speaker.Name}</h3>
+                            <p class="specialisation">{speaker.Specialisation__c}</p>
+                            <div class="bio">
+                                <lightning-formatted-rich-text value={speaker.About_Me__c}></lightning-formatted-rich-text>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+
+                <template if:true={speakers.error}>
+                    <p>Não foi possível carregar os palestrantes.</p>
+                </template>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <div>
+                <h3>Encontre Eventos</h3>
+                <p>Descubra palestras, workshops e eventos médicos próximos de você.</p>
+            </div>
+
+            <div>
+                <h3>Aprenda com Especialistas</h3>
+                <p>Conecte-se com profissionais e palestrantes da área da saúde.</p>
+            </div>
+
+            <div>
+                <h3>Inscrição Simplificada</h3>
+                <p>Inscreva-se em eventos e gerencie suas participações em um único lugar.</p>
+            </div>
+
+            <div>
+                <h3>Mais Saúde</h3>
+                <p>Mantenha-se informado e cuide melhor da sua saúde e bem-estar.</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            © 2026 MedConnect. Todos os direitos reservados.
+        </footer>
+    </div>
+</template>

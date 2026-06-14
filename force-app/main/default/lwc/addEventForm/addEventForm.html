@@ -1,0 +1,83 @@
+<template>
+  <div class="container">
+    <div class="card">
+      <h1>Criar Evento</h1>
+
+      <template if:true={errorMessage}>
+        <div class="message error" role="alert">
+          {errorMessage}
+        </div>
+      </template>
+
+      <template if:true={successMessage}>
+        <div class="message success" role="status">
+          {successMessage}
+        </div>
+      </template>
+
+      <div class="formGrid">
+        <div class="fullWidth">
+          <lightning-input label="Nome do Evento" name="Name__c" value={eventData.Name__c} onchange={handleChange}
+            required>
+          </lightning-input>
+        </div>
+
+        <lightning-input type="datetime" label="Data e Hora de Início" name="Start_Date_Time__c"
+          value={eventData.Start_Date_Time__c} onchange={handleChange} required>
+        </lightning-input>
+
+        <lightning-input type="datetime" label="Data e Hora de Término" name="End_Date_Time__c"
+          value={eventData.End_Date_Time__c} onchange={handleChange} required>
+        </lightning-input>
+
+        <lightning-input type="number" label="Máximo de Participantes" name="Max_Seats__c" min="1"
+          value={eventData.Max_Seats__c} onchange={handleChange} required>
+        </lightning-input>
+
+        <lightning-combobox name="Status__c" label="Status" placeholder="Selecione um status"
+          value={eventData.Status__c} options={statusOptions} onchange={handleChange} required>
+        </lightning-combobox>
+
+        <lightning-combobox name="Event_Type__c" label="Tipo do Evento" placeholder="Selecione o tipo"
+          value={eventData.Event_Type__c} options={typeOptions} onchange={handleChange} required>
+        </lightning-combobox>
+
+        <div class="checkboxGroup">
+          <lightning-input type="checkbox" label="Evento ativo?" name="Live__c" checked={eventData.Live__c}
+            onchange={handleChange}>
+          </lightning-input>
+
+          <lightning-input type="checkbox" label="Evento recorrente?" name="Recurring__c"
+            checked={eventData.Recurring__c} onchange={handleChange}>
+          </lightning-input>
+        </div>
+
+        <template if:true={showFrequency}>
+          <lightning-combobox name="Frequency__c" label="Frequência" placeholder="Selecione a frequência"
+            value={eventData.Frequency__c} options={frequencyOptions} onchange={handleChange} required>
+          </lightning-combobox>
+        </template>
+
+        <template if:true={showLocation}>
+          <lightning-record-picker label="Localização" placeholder="Pesquisar local..." object-api-name="Location__c"
+            onchange={handleLocationChange} required>
+          </lightning-record-picker>
+        </template>
+
+        <lightning-record-picker label="Palestrante" placeholder="Pesquisar palestrante..." object-api-name="Speaker__c"
+          onchange={handleSpeakerChange}>
+        </lightning-record-picker>
+
+        <div class="fullWidth">
+          <lightning-textarea label="Detalhes do Evento" name="Event_Detail__c" value={eventData.Event_Detail__c}
+            onchange={handleChange}>
+          </lightning-textarea>
+        </div>
+      </div>
+
+      <button class="saveButton" onclick={handleSave} disabled={isSaving}>
+        {saveButtonLabel}
+      </button>
+    </div>
+  </div>
+</template>

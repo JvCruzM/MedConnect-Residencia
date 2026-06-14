@@ -1,0 +1,338 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.page {
+    font-family: Arial, sans-serif;
+    background: #f7fbfa;
+    color: #1f2937;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-weight: 600;
+}
+
+.heroText button {
+    background: #0f766e;
+    color: white;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 70px 48px;
+    align-items: center;
+}
+
+.heroText h1 {
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    color: #111827;
+}
+
+.heroText p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #4b5563;
+    margin-bottom: 28px;
+}
+
+.heroImage img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(15, 118, 110, 0.18);
+    display: block;
+}
+
+.section {
+    padding: 40px 48px;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.sectionHeader h2 {
+    font-size: 30px;
+    color: #111827;
+    margin: 0;
+}
+
+.sectionHeader a {
+    color: #0f766e;
+    font-weight: 600;
+}
+
+.cards,
+.benefits {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.speakers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.card,
+.speaker,
+.benefits div {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 12px 28px rgba(15, 118, 110, 0.08);
+    border: 1px solid #e5e7eb;
+    min-width: 0;
+}
+
+.card span {
+    color: #0f766e;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.card h3,
+.speaker h3,
+.benefits h3 {
+    margin: 12px 0;
+    color: #111827;
+    overflow-wrap: anywhere;
+}
+
+.card p,
+.speaker p,
+.benefits p {
+    color: #6b7280;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.card strong {
+    color: #0f766e;
+}
+
+.speaker p.specialisation {
+    display: block;
+    color: #0f766e;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 4px;
+}
+
+.speaker img.speaker-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 16px;
+    margin-bottom: 14px;
+    display: block;
+}
+
+.bio {
+    overflow-wrap: anywhere;
+}
+
+.benefits {
+    padding: 50px 48px;
+}
+
+.footer {
+    text-align: center;
+    padding: 28px 16px;
+    background: #0f766e;
+    color: white;
+    margin-top: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    .hero {
+        gap: 32px;
+        padding: 56px 32px;
+    }
+
+    .section {
+        padding: 36px 32px;
+    }
+
+    .benefits {
+        padding: 42px 32px;
+    }
+
+    .cards,
+    .benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .heroText h1 {
+        font-size: 42px;
+    }
+
+    .heroText p {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 24px;
+        text-align: center;
+    }
+
+    .heroText h1 {
+        font-size: 34px;
+    }
+
+    .heroText p {
+        font-size: 16px;
+    }
+
+    .heroText button {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .heroImage img {
+        height: 260px;
+        border-radius: 18px;
+    }
+
+    .section {
+        padding: 32px 24px;
+    }
+
+    .sectionHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .sectionHeader h2 {
+        font-size: 26px;
+    }
+
+    .speakers {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .cards,
+    .benefits {
+        grid-template-columns: 1fr;
+    }
+
+    .card,
+    .speaker,
+    .benefits div {
+        padding: 20px;
+    }
+
+    .benefits {
+        padding: 32px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 34px 16px;
+    }
+
+    .heroText h1 {
+        font-size: 30px;
+    }
+
+    .heroText p {
+        font-size: 15px;
+    }
+
+    .heroImage img {
+        height: 220px;
+    }
+
+    .section {
+        padding: 28px 16px;
+    }
+
+    .sectionHeader h2 {
+        font-size: 24px;
+    }
+
+    .speakers {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .speaker {
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .speaker h3 {
+    font-size: 14px;
+    margin: 10px 0 6px;
+    }
+
+    .speaker p.specialisation {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .speaker p,
+    .bio {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .card,
+    .benefits div {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .speaker img.speaker-img {
+        aspect-ratio: 1 / 1;
+        height: auto;
+        border-radius: 14px;
+    }
+
+    .benefits {
+        padding: 28px 16px;
+    }
+
+    .footer {
+        padding: 22px 16px;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}

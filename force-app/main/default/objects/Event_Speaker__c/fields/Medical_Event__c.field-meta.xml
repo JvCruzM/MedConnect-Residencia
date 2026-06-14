@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Medical_Event__c</fullName>
+    <description>Referência ao evento médico ao qual o palestrante está associado.</description>
+    <inlineHelpText>Selecione o evento médico em que o palestrante participará.</inlineHelpText>
+    <label>Evento Médico</label>
+    <referenceTo>Medical_Event__c</referenceTo>
+    <relationshipLabel>Evento-Palestrantes</relationshipLabel>
+    <relationshipName>Event_Speakers</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>
