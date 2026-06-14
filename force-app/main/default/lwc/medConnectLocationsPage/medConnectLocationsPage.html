@@ -12,21 +12,30 @@
                     </a>
                 </template>
             </div>
+
             <p>
                 Conheça os locais onde os eventos do MedConnect acontecem.
             </p>
         </div>
 
-        <div class="locationsGrid">
+        <template if:true={errorMessage}>
+            <div class="message error" role="alert">
+                {errorMessage}
+            </div>
+        </template>
 
-            <template if:true={locations.data}>
+        <template if:true={successMessage}>
+            <div class="message success" role="status">
+                {successMessage}
+            </div>
+        </template>
 
-                <template for:each={locations.data} for:item="location">
-
+        <template if:true={hasLocations}>
+            <div class="locationsGrid">
+                <template for:each={locations} for:item="location">
                     <div class="locationCard" key={location.Id}>
 
                         <div class="cardHeader">
-
                             <h2>{location.Name}</h2>
 
                             <template if:true={location.Verified__c}>
@@ -34,11 +43,9 @@
                                     ✓ Verificado
                                 </span>
                             </template>
-
                         </div>
 
                         <div class="locationInfo">
-
                             <p>
                                 <strong>Endereço:</strong>
                                 {location.Street__c}
@@ -68,20 +75,37 @@
                                 <strong>Referência:</strong>
                                 {location.Landmark__c}
                             </p>
-
                         </div>
 
+                        <template if:true={location.canManage}>
+                            <div class="buttonRow">
+                                <button
+                                    type="button"
+                                    class="editButton"
+                                    data-id={location.Id}
+                                    onclick={handleEditLocation}>
+                                    Editar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="deleteButton"
+                                    data-id={location.Id}
+                                    data-name={location.Name}
+                                    onclick={handleDeleteLocation}>
+                                    Excluir
+                                </button>
+                            </div>
+                        </template>
+
                     </div>
-
                 </template>
+            </div>
+        </template>
 
-            </template>
-
-            <template if:true={locations.error}>
-                <p>Não foi possível carregar os locais.</p>
-            </template>
-
-        </div>
+        <template if:false={hasLocations}>
+            <p>Nenhuma localização encontrada.</p>
+        </template>
 
     </section>
 </template>

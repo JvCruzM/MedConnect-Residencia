@@ -1,6 +1,9 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import { createRecord } from 'lightning/uiRecordApi';
-import { NavigationMixin } from 'lightning/navigation';
+import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
+
+import getLocationForEdit from '@salesforce/apex/LocationController.getLocationForEdit';
+import updateLocation from '@salesforce/apex/LocationController.updateLocation';
 
 export default class AddLocationForm extends NavigationMixin(LightningElement) {
     @track locationData = {
@@ -8,6 +11,7 @@ export default class AddLocationForm extends NavigationMixin(LightningElement) {
         Verified__c: false
     };
 
+    locationId;
     errorMessage = '';
     successMessage = '';
     warningMessage = '';
@@ -24,8 +28,59 @@ export default class AddLocationForm extends NavigationMixin(LightningElement) {
         { label: 'Estados Unidos', value: 'USA' }
     ];
 
+    @wire(CurrentPageReference)
+    getPageReference(pageRef) {
+        if (pageRef && pageRef.state) {
+            const pageLocationId = pageRef.state.c__locationId || pageRef.state.locationId;
+
+            if (pageLocationId && pageLocationId !== this.locationId) {
+                this.locationId = pageLocationId;
+                this.loadLocationForEdit();
+            }
+        }
+    }
+
+    get isEditMode() {
+        return !!this.locationId;
+    }
+
+    get formTitle() {
+        return this.isEditMode ? 'Editar Localização' : 'Adicionar Novo Local';
+    }
+
     get saveButtonLabel() {
-        return this.isSaving ? 'Salvando localização...' : 'Salvar Localização';
+        if (this.isSaving) {
+            return this.isEditMode ? 'Salvando alterações...' : 'Salvando localização...';
+        }
+
+        return this.isEditMode ? 'Salvar Alterações' : 'Salvar Localização';
+    }
+
+    loadLocationForEdit() {
+        this.errorMessage = '';
+        this.successMessage = '';
+        this.warningMessage = '';
+
+        getLocationForEdit({ locationId: this.locationId })
+            .then(data => {
+                this.locationData = {
+                    Name: data.nameValue,
+                    Street__c: data.street,
+                    Landmark__c: data.landmark,
+                    City__c: data.city,
+                    State__c: data.stateValue,
+                    Postal_Code__c: data.postalCode,
+                    Country__c: data.country || 'Brazil',
+                    Verified__c: data.verified === true
+                };
+
+                const cleanCep = data.postalCode ? data.postalCode.replace(/[^0-9]/g, '') : '';
+                this.lastSearchedCep = cleanCep;
+            })
+            .catch(error => {
+                this.errorMessage = this.extractErrorMessage(error);
+                console.error('Erro ao carregar localização:', JSON.parse(JSON.stringify(error)));
+            });
     }
 
     handleChange(event) {
@@ -256,6 +311,14 @@ export default class AddLocationForm extends NavigationMixin(LightningElement) {
 
         this.isSaving = true;
 
+        if (this.isEditMode) {
+            this.updateExistingLocation();
+        } else {
+            this.createNewLocation();
+        }
+    }
+
+    createNewLocation() {
         const fields = this.buildFields();
 
         const recordInput = {
@@ -267,17 +330,9 @@ export default class AddLocationForm extends NavigationMixin(LightningElement) {
             .then(() => {
                 this.warningMessage = '';
                 this.successMessage = 'Localização criada com sucesso.';
-
-                setTimeout(() => {
-                    this[NavigationMixin.Navigate]({
-                        type: 'standard__webPage',
-                        attributes: {
-                            url: '/locations'
-                        }
-                    });
-                }, 1000);
+                this.navigateToLocations();
             })
-            .catch((error) => {
+            .catch(error => {
                 this.errorMessage = this.extractErrorMessage(error);
                 console.error('Detalhe Técnico:', JSON.parse(JSON.stringify(error)));
             })
@@ -286,10 +341,47 @@ export default class AddLocationForm extends NavigationMixin(LightningElement) {
             });
     }
 
+    updateExistingLocation() {
+        updateLocation({
+            locationId: this.locationId,
+            nameValue: this.locationData.Name,
+            street: this.locationData.Street__c,
+            landmark: this.locationData.Landmark__c,
+            city: this.locationData.City__c,
+            stateValue: this.locationData.State__c,
+            postalCode: this.locationData.Postal_Code__c,
+            country: this.locationData.Country__c,
+            verified: this.locationData.Verified__c === true
+        })
+            .then(() => {
+                this.warningMessage = '';
+                this.successMessage = 'Localização atualizada com sucesso.';
+                this.navigateToLocations();
+            })
+            .catch(error => {
+                this.errorMessage = this.extractErrorMessage(error);
+                console.error('Erro ao atualizar localização:', JSON.parse(JSON.stringify(error)));
+            })
+            .finally(() => {
+                this.isSaving = false;
+            });
+    }
+
+    navigateToLocations() {
+        setTimeout(() => {
+            this[NavigationMixin.Navigate]({
+                type: 'standard__webPage',
+                attributes: {
+                    url: '/locations'
+                }
+            });
+        }, 1000);
+    }
+
     buildFields() {
         const fields = {};
 
-        Object.keys(this.locationData).forEach((fieldName) => {
+        Object.keys(this.locationData).forEach(fieldName => {
             const value = this.locationData[fieldName];
 
             if (typeof value === 'string') {
@@ -313,6 +405,10 @@ export default class AddLocationForm extends NavigationMixin(LightningElement) {
             return 'Erro desconhecido ao salvar localização.';
         }
 
+        if (error.body && error.body.message) {
+            return error.body.message;
+        }
+
         if (error.body && error.body.output) {
             if (error.body.output.errors && error.body.output.errors.length > 0) {
                 return error.body.output.errors[0].message;
@@ -326,10 +422,6 @@ export default class AddLocationForm extends NavigationMixin(LightningElement) {
                     return `Erro no campo ${firstField}: ${fieldErrors[firstField][0].message}`;
                 }
             }
-        }
-
-        if (error.body && error.body.message) {
-            return error.body.message;
         }
 
         if (error.message) {
