@@ -1,7 +1,10 @@
 import { LightningElement, track, wire } from 'lwc';
 import { createRecord } from 'lightning/uiRecordApi';
-import { NavigationMixin } from 'lightning/navigation';
+import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
+
 import getCurrentOrganizerId from '@salesforce/apex/AddEventFormController.getCurrentOrganizerId';
+import getEventForEdit from '@salesforce/apex/AddEventFormController.getEventForEdit';
+import updateEvent from '@salesforce/apex/AddEventFormController.updateEvent';
 
 export default class AddEventForm extends NavigationMixin(LightningElement) {
     @track eventData = {
@@ -9,23 +12,37 @@ export default class AddEventForm extends NavigationMixin(LightningElement) {
         Recurring__c: false
     };
 
-    @wire(getCurrentOrganizerId)
-    wiredOrganizer({ error, data }) {
-        if (data) {
-            this.eventData = {
-                ...this.eventData,
-                Organizers__c: data
-            };
-        } else if (error) {
-            this.errorMessage = 'Não foi possível identificar o organizador logado.';
-            console.error('Erro ao buscar organizador:', error);
-        }
-    }
-
+    eventId;
     selectedSpeakerId = '';
     errorMessage = '';
     successMessage = '';
     isSaving = false;
+    isLoadingEditData = false;
+
+    @wire(CurrentPageReference)
+    getPageReference(pageRef) {
+        if (pageRef && pageRef.state) {
+            const pageEventId = pageRef.state.c__eventId || pageRef.state.eventId;
+
+            if (pageEventId && pageEventId !== this.eventId) {
+                this.eventId = pageEventId;
+                this.loadEventForEdit();
+            }
+        }
+    }
+
+    @wire(getCurrentOrganizerId)
+    wiredOrganizer({ error, data }) {
+        if (data && !this.isEditMode) {
+            this.eventData = {
+                ...this.eventData,
+                Organizers__c: data
+            };
+        } else if (error && !this.isEditMode) {
+            this.errorMessage = 'Não foi possível identificar o organizador logado.';
+            console.error('Erro ao buscar organizador:', error);
+        }
+    }
 
     statusOptions = [
         { label: 'Criado', value: 'Created' },
@@ -46,6 +63,14 @@ export default class AddEventForm extends NavigationMixin(LightningElement) {
         { label: 'Semanal', value: 'Weekly' }
     ];
 
+    get isEditMode() {
+        return !!this.eventId;
+    }
+
+    get formTitle() {
+        return this.isEditMode ? 'Editar Evento' : 'Criar Evento';
+    }
+
     get showFrequency() {
         return this.eventData.Recurring__c === true;
     }
@@ -54,8 +79,61 @@ export default class AddEventForm extends NavigationMixin(LightningElement) {
         return this.eventData.Event_Type__c === 'In-Person';
     }
 
+    get currentLocationId() {
+        return this.eventData.Location__c || null;
+    }
+
+    get currentSpeakerId() {
+        return this.selectedSpeakerId || null;
+    }
+
     get saveButtonLabel() {
-        return this.isSaving ? 'Criando evento...' : 'Criar Evento';
+        if (this.isSaving) {
+            return this.isEditMode ? 'Salvando alterações...' : 'Criando evento...';
+        }
+
+        return this.isEditMode ? 'Salvar Alterações' : 'Criar Evento';
+    }
+
+    loadEventForEdit() {
+        this.errorMessage = '';
+        this.successMessage = '';
+        this.isLoadingEditData = true;
+
+        getEventForEdit({ eventId: this.eventId })
+            .then((data) => {
+                this.eventData = {
+                    Name__c: data.nameValue,
+                    Start_Date_Time__c: this.formatDateTimeInput(data.startDateTime),
+                    End_Date_Time__c: this.formatDateTimeInput(data.endDateTime),
+                    Max_Seats__c: data.maxSeats,
+                    Status__c: data.status,
+                    Event_Type__c: data.eventType,
+                    Live__c: data.live,
+                    Recurring__c: data.recurring,
+                    Frequency__c: data.frequency,
+                    Location__c: data.locationId,
+                    Event_Detail__c: data.eventDetail,
+                    Organizers__c: data.organizerId
+                };
+
+                this.selectedSpeakerId = data.speakerId || '';
+            })
+            .catch((error) => {
+                this.errorMessage = this.extractErrorMessage(error);
+                console.error('Erro ao carregar evento para edição:', JSON.parse(JSON.stringify(error)));
+            })
+            .finally(() => {
+                this.isLoadingEditData = false;
+            });
+    }
+
+    formatDateTimeInput(value) {
+        if (!value) {
+            return '';
+        }
+
+        return new Date(value).toISOString();
     }
 
     handleChange(event) {
@@ -163,6 +241,14 @@ export default class AddEventForm extends NavigationMixin(LightningElement) {
 
         this.isSaving = true;
 
+        if (this.isEditMode) {
+            this.updateExistingEvent();
+        } else {
+            this.createNewEvent();
+        }
+    }
+
+    createNewEvent() {
         const fields = {
             ...this.eventData
         };
@@ -201,17 +287,7 @@ export default class AddEventForm extends NavigationMixin(LightningElement) {
                     ? 'Evento criado com sucesso e palestrante vinculado.'
                     : 'Evento criado com sucesso.';
 
-                setTimeout(() => {
-                    this[NavigationMixin.Navigate]({
-                        type: 'comm__namedPage',
-                        attributes: {
-                            name: 'custom_evento_mdico_detail2__c'
-                        },
-                        state: {
-                            c__eventId: result.eventId
-                        }
-                    });
-                }, 1200);
+                this.navigateToEventDetails(result.eventId);
             })
             .catch((error) => {
                 this.errorMessage = this.extractErrorMessage(error);
@@ -222,9 +298,56 @@ export default class AddEventForm extends NavigationMixin(LightningElement) {
             });
     }
 
+    updateExistingEvent() {
+        updateEvent({
+            eventId: this.eventId,
+            nameValue: this.eventData.Name__c,
+            startDateTime: this.eventData.Start_Date_Time__c,
+            endDateTime: this.eventData.End_Date_Time__c,
+            maxSeats: Number(this.eventData.Max_Seats__c),
+            status: this.eventData.Status__c,
+            eventType: this.eventData.Event_Type__c,
+            live: this.eventData.Live__c,
+            recurring: this.eventData.Recurring__c,
+            frequency: this.eventData.Frequency__c,
+            locationId: this.eventData.Location__c,
+            eventDetail: this.eventData.Event_Detail__c,
+            speakerId: this.selectedSpeakerId || null
+        })
+            .then((updatedEventId) => {
+                this.successMessage = 'Evento atualizado com sucesso.';
+                this.navigateToEventDetails(updatedEventId);
+            })
+            .catch((error) => {
+                this.errorMessage = this.extractErrorMessage(error);
+                console.error('Erro ao atualizar evento:', JSON.parse(JSON.stringify(error)));
+            })
+            .finally(() => {
+                this.isSaving = false;
+            });
+    }
+
+    navigateToEventDetails(eventId) {
+        setTimeout(() => {
+            this[NavigationMixin.Navigate]({
+                type: 'comm__namedPage',
+                attributes: {
+                    name: 'custom_evento_mdico_detail2__c'
+                },
+                state: {
+                    c__eventId: eventId
+                }
+            });
+        }, 1000);
+    }
+
     extractErrorMessage(error) {
         if (!error) {
-            return 'Erro desconhecido ao criar evento.';
+            return 'Erro desconhecido ao salvar evento.';
+        }
+
+        if (error.body && error.body.message) {
+            return error.body.message;
         }
 
         if (error.body && error.body.output) {
@@ -242,14 +365,10 @@ export default class AddEventForm extends NavigationMixin(LightningElement) {
             }
         }
 
-        if (error.body && error.body.message) {
-            return error.body.message;
-        }
-
         if (error.message) {
             return error.message;
         }
 
-        return 'Erro desconhecido ao criar evento.';
+        return 'Erro desconhecido ao salvar evento.';
     }
 }

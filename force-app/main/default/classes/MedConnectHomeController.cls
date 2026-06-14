@@ -17,6 +17,22 @@ public without sharing class MedConnectHomeController {
     }
 
     @AuraEnabled(cacheable=true)
+    public static List<Medical_Event__c> getEventsForList() {
+        return [
+            SELECT Id,
+                Name__c,
+                Start_Date_Time__c,
+                Status__c,
+                Location__r.Name,
+                Remaining_Seats__c,
+                Organizers__c
+            FROM Medical_Event__c
+            WHERE Live__c = true
+            ORDER BY Start_Date_Time__c ASC
+        ];
+    }
+
+    @AuraEnabled(cacheable=true)
     public static Medical_Event__c getEventById(Id eventId) {
         return [
             SELECT Id,

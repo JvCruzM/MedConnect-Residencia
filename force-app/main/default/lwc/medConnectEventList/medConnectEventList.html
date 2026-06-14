@@ -5,32 +5,70 @@
             <p>Explore eventos médicos, workshops e sessões de bem-estar.</p>
         </div>
 
+        <template if:true={errorMessage}>
+            <div class="message error" role="alert">
+                {errorMessage}
+            </div>
+        </template>
+
+        <template if:true={successMessage}>
+            <div class="message success" role="status">
+                {successMessage}
+            </div>
+        </template>
+
         <div class="searchBox">
             <label>Pesquisar Eventos</label>
             <input type="text" placeholder="Busque por nome ou status..." oninput={handleSearch} />
         </div>
 
-        <div class="eventGrid">
-            <template if:true={events.data}>
+        <template if:true={hasEvents}>
+            <div class="eventGrid">
                 <template for:each={filteredEvents} for:item="event">
                     <div class="eventCard" key={event.Id}>
                         <span class="date">
                             {event.formattedDate}
                         </span>
+
                         <h2>{event.Name__c}</h2>
                         <p>{event.Status__c}</p>
-                        <strong>{event.Remaining_Seats__c} Vagas restantes</strong>
+                        <strong>{event.Remaining_Seats__c} vagas restantes</strong>
 
-                        <button data-id={event.Id} data-name={event.Name__c} onclick={handleViewDetails}>
-                            Ver detalhes
-                        </button>
+                        <div class="buttonRow">
+                            <button
+                                type="button"
+                                data-id={event.Id}
+                                onclick={handleViewDetails}
+                                class="detailsButton">
+                                Ver detalhes
+                            </button>
+
+                            <template if:true={event.canManage}>
+                                <button
+                                    type="button"
+                                    data-id={event.Id}
+                                    onclick={handleEdit}
+                                    class="editButton">
+                                    Editar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    data-id={event.Id}
+                                    data-name={event.Name__c}
+                                    onclick={handleDelete}
+                                    class="deleteButton">
+                                    Excluir
+                                </button>
+                            </template>
+                        </div>
                     </div>
                 </template>
-            </template>
+            </div>
+        </template>
 
-            <template if:true={events.error}>
-                <p>Não foi possível carregar os eventos.</p>
-            </template>
-        </div>
+        <template if:false={hasEvents}>
+            <p>Nenhum evento encontrado.</p>
+        </template>
     </section>
 </template>

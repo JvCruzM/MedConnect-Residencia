@@ -109,6 +109,71 @@
     background: #0b5f59;
 }
 
+.message {
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.buttonRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.detailsButton,
+.editButton,
+.deleteButton {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+}
+
+.detailsButton {
+    background: #0f766e;
+    color: white;
+}
+
+.detailsButton:hover {
+    background: #0b5f59;
+}
+
+.editButton {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.editButton:hover {
+    background: #bae6fd;
+}
+
+.deleteButton {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.deleteButton:hover {
+    background: #fecaca;
+}
+
 @media (max-width: 1024px) {
     .eventPage {
         padding: 40px 32px;
@@ -165,6 +230,16 @@
     .eventCard button {
         width: 100%;
         align-self: stretch;
+    }
+
+    .buttonRow {
+        flex-direction: column;
+    }
+
+    .detailsButton,
+    .editButton,
+    .deleteButton {
+        width: 100%;
     }
 }
 

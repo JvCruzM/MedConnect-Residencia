@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="card">
-      <h1>Criar Evento</h1>
+      <h1>{formTitle}</h1>
 
       <template if:true={errorMessage}>
         <div class="message error" role="alert">
@@ -60,12 +60,12 @@
 
         <template if:true={showLocation}>
           <lightning-record-picker label="Localização" placeholder="Pesquisar local..." object-api-name="Location__c"
-            onchange={handleLocationChange} required>
+            value={currentLocationId} onchange={handleLocationChange} required>
           </lightning-record-picker>
         </template>
 
         <lightning-record-picker label="Palestrante" placeholder="Pesquisar palestrante..." object-api-name="Speaker__c"
-          onchange={handleSpeakerChange}>
+          value={currentSpeakerId} onchange={handleSpeakerChange}>
         </lightning-record-picker>
 
         <div class="fullWidth">

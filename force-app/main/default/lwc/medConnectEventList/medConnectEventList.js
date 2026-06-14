@@ -1,19 +1,56 @@
 import { LightningElement, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import getUpcomingEvents from '@salesforce/apex/MedConnectHomeController.getUpcomingEvents';
+import { refreshApex } from '@salesforce/apex';
+
+import getEventsForList from '@salesforce/apex/MedConnectHomeController.getEventsForList';
+import getCurrentOrganizerIdIfExists from '@salesforce/apex/AddEventFormController.getCurrentOrganizerIdIfExists';
+import deleteEvent from '@salesforce/apex/AddEventFormController.deleteEvent';
 
 export default class MedConnectEventList extends NavigationMixin(LightningElement) {
     searchTerm = '';
+    currentOrganizerId;
+    rawEvents = [];
+    filteredEvents = [];
 
-    @wire(getUpcomingEvents)
-    events;
+    errorMessage = '';
+    successMessage = '';
+    wiredEventsResult;
 
-    get filteredEvents() {
-        if (!this.events.data) {
-            return [];
+    @wire(getCurrentOrganizerIdIfExists)
+    wiredOrganizer({ error, data }) {
+        if (data) {
+            this.currentOrganizerId = data;
+            this.applyFilters();
+        } else if (error) {
+            this.currentOrganizerId = null;
+            console.error('Erro ao identificar organizador:', error);
         }
+    }
 
-        let eventList = this.events.data;
+    @wire(getEventsForList)
+    wiredEvents(result) {
+        this.wiredEventsResult = result;
+
+        const { error, data } = result;
+
+        if (data) {
+            this.rawEvents = data;
+            this.errorMessage = '';
+            this.applyFilters();
+        } else if (error) {
+            this.rawEvents = [];
+            this.filteredEvents = [];
+            this.errorMessage = 'Não foi possível carregar os eventos.';
+            console.error('Erro ao carregar eventos:', error);
+        }
+    }
+
+    get hasEvents() {
+        return this.filteredEvents && this.filteredEvents.length > 0;
+    }
+
+    applyFilters() {
+        let eventList = this.rawEvents || [];
 
         if (this.searchTerm) {
             const search = this.searchTerm.toLowerCase();
@@ -26,10 +63,11 @@ export default class MedConnectEventList extends NavigationMixin(LightningElemen
             });
         }
 
-        return eventList.map(event => {
+        this.filteredEvents = eventList.map(event => {
             return {
                 ...event,
-                formattedDate: this.formatDateTime(event.Start_Date_Time__c)
+                formattedDate: this.formatDateTime(event.Start_Date_Time__c),
+                canManage: this.currentOrganizerId && event.Organizers__c === this.currentOrganizerId
             };
         });
     }
@@ -52,6 +90,7 @@ export default class MedConnectEventList extends NavigationMixin(LightningElemen
 
     handleSearch(event) {
         this.searchTerm = event.target.value;
+        this.applyFilters();
     }
 
     handleViewDetails(event) {
@@ -66,5 +105,61 @@ export default class MedConnectEventList extends NavigationMixin(LightningElemen
                 c__eventId: eventId
             }
         });
+    }
+
+    handleEdit(event) {
+        const eventId = event.currentTarget.dataset.id;
+
+        this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: `/add-event-form?c__eventId=${eventId}`
+            }
+        });
+    }
+
+    handleDelete(event) {
+        const eventId = event.currentTarget.dataset.id;
+        const eventName = event.currentTarget.dataset.name;
+
+        const confirmed = window.confirm(
+            `Tem certeza que deseja excluir o evento "${eventName}"?`
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        this.errorMessage = '';
+        this.successMessage = '';
+
+        deleteEvent({ eventId })
+            .then(() => {
+                this.successMessage = 'Evento excluído com sucesso.';
+                return refreshApex(this.wiredEventsResult);
+            })
+            .then(() => {
+                this.applyFilters();
+            })
+            .catch(error => {
+                this.errorMessage = this.extractErrorMessage(error);
+                console.error('Erro ao excluir evento:', JSON.parse(JSON.stringify(error)));
+            });
+    }
+
+    extractErrorMessage(error) {
+        if (!error) {
+            return 'Erro desconhecido.';
+        }
+
+        if (error.body && error.body.message) {
+            return error.body.message;
+        }
+
+        if (error.message) {
+            return error.message;
+        }
+
+        return 'Erro desconhecido.';
     }
 }
