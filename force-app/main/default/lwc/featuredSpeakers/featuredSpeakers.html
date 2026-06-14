@@ -2,7 +2,7 @@
     <section class="speakers-section">
         <div class="section-header">
             <h2>Nossos Palestrantes</h2>
-            
+
             <div class="header-actions">
                 <template if:true={isOrganizer}>
                     <a style="cursor: pointer;" onclick={handleAddSpeaker}>
@@ -12,30 +12,69 @@
             </div>
         </div>
 
-        <div class="speaker-grid">
-            <template for:each={speakers} for:item="speaker">
-                <article key={speaker.Id} class="speaker-card">
-                    <img
-                        src={speaker.Profile_URL__c}
-                        alt={speaker.Name}
-                        class="speaker-photo"
-                    />
+        <template if:true={errorMessage}>
+            <div class="message error" role="alert">
+                {errorMessage}
+            </div>
+        </template>
 
-                    <div class="speaker-info">
-                        <h3>{speaker.Name}</h3>
+        <template if:true={successMessage}>
+            <div class="message success" role="status">
+                {successMessage}
+            </div>
+        </template>
 
-                        <p class="specialisation">
-                            {speaker.Specialisation__c}
-                        </p>
+        <template if:true={hasSpeakers}>
+            <div class="speaker-grid">
+                <template for:each={speakers} for:item="speaker">
+                    <article key={speaker.Id} class="speaker-card">
+                        <img
+                            src={speaker.Profile_URL__c}
+                            alt={speaker.Name}
+                            class="speaker-photo"
+                        />
 
-                        <div class="bio">
-                            <lightning-formatted-rich-text
-                                value={speaker.About_Me__c}>
-                            </lightning-formatted-rich-text>
+                        <div class="speaker-info">
+                            <h3>{speaker.Name}</h3>
+
+                            <p class="specialisation">
+                                {speaker.Specialisation__c}
+                            </p>
+
+                            <div class="bio">
+                                <lightning-formatted-rich-text
+                                    value={speaker.About_Me__c}>
+                                </lightning-formatted-rich-text>
+                            </div>
+
+                            <template if:true={speaker.canManage}>
+                                <div class="buttonRow">
+                                    <button
+                                        type="button"
+                                        class="editButton"
+                                        data-id={speaker.Id}
+                                        onclick={handleEditSpeaker}>
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="deleteButton"
+                                        data-id={speaker.Id}
+                                        data-name={speaker.Name}
+                                        onclick={handleDeleteSpeaker}>
+                                        Excluir
+                                    </button>
+                                </div>
+                            </template>
                         </div>
-                    </div>
-                </article>
-            </template>
-        </div>
+                    </article>
+                </template>
+            </div>
+        </template>
+
+        <template if:false={hasSpeakers}>
+            <p>Nenhum palestrante encontrado.</p>
+        </template>
     </section>
 </template>

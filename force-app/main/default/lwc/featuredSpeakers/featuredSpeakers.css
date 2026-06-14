@@ -103,6 +103,60 @@
     overflow-wrap: anywhere;
 }
 
+.message {
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.buttonRow {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.editButton,
+.deleteButton {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.editButton {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.editButton:hover {
+    background: #bae6fd;
+}
+
+.deleteButton {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.deleteButton:hover {
+    background: #fecaca;
+}
+
 @media (max-width: 1024px) {
     .speakers-section {
         padding: 40px 32px;
@@ -149,6 +203,15 @@
 
     .speaker-card {
         padding: 20px;
+    }
+
+    .buttonRow {
+        flex-direction: column;
+    }
+
+    .editButton,
+    .deleteButton {
+        width: 100%;
     }
 }
 
