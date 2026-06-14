@@ -28,6 +28,25 @@ export default class MedConnectEventDetail extends LightningElement {
             : '';
     }
 
+    get statusLabel() {
+        return this.event?.data
+            ? this.formatStatus(this.event.data.Status__c)
+            : '';
+    }
+
+    formatStatus(status) {
+        const statusMap = {
+            Created: 'Criado',
+            Published: 'Publicado',
+            'In Progress': 'Em Andamento',
+            Completed: 'Concluído',
+            Postponed: 'Adiado',
+            Cancelled: 'Cancelado'
+        };
+
+        return statusMap[status] || status || 'Não informado';
+    }
+
     formatDateTime(value) {
         if (!value) {
             return '';

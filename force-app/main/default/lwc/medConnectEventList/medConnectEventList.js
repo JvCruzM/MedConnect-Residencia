@@ -67,6 +67,7 @@ export default class MedConnectEventList extends NavigationMixin(LightningElemen
             return {
                 ...event,
                 formattedDate: this.formatDateTime(event.Start_Date_Time__c),
+                statusLabel: this.formatStatus(event.Status__c),
                 canManage: this.currentOrganizerId && event.Organizers__c === this.currentOrganizerId
             };
         });
@@ -86,6 +87,19 @@ export default class MedConnectEventList extends NavigationMixin(LightningElemen
             minute: '2-digit',
             hour12: false
         }).format(new Date(value));
+    }
+
+    formatStatus(status) {
+        const statusMap = {
+            Created: 'Criado',
+            Published: 'Publicado',
+            'In Progress': 'Em Andamento',
+            Completed: 'Concluído',
+            Postponed: 'Adiado',
+            Cancelled: 'Cancelado'
+        };
+
+        return statusMap[status] || status || 'Não informado';
     }
 
     handleSearch(event) {

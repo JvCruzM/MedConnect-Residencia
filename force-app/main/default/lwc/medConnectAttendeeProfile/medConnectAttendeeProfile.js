@@ -28,6 +28,7 @@ export default class MedConnectAttendeeProfile extends NavigationMixin(Lightning
                 return {
                     ...event,
                     formattedStartDate: this.formatDateTime(event.startDate),
+                    statusLabel: this.formatStatus(event.status),
                     isPast: this.isPastEvent(event.startDate)
                 };
             });
@@ -102,6 +103,19 @@ export default class MedConnectAttendeeProfile extends NavigationMixin(Lightning
         return this.user && this.user.data;
     }
 
+    formatStatus(status) {
+        const statusMap = {
+            Created: 'Criado',
+            Published: 'Publicado',
+            'In Progress': 'Em Andamento',
+            Completed: 'Concluído',
+            Postponed: 'Adiado',
+            Cancelled: 'Cancelado'
+        };
+
+        return statusMap[status] || status || 'Não informado';
+    }
+
     formatDateTime(value) {
         if (!value) {
             return 'Data não informada';
@@ -132,7 +146,7 @@ export default class MedConnectAttendeeProfile extends NavigationMixin(Lightning
         this[NavigationMixin.Navigate]({
             type: 'comm__namedPage',
             attributes: {
-                name: 'custom_evento_mdico_detail2__c'
+                name: 'Detalhe_evento__c'
             },
             state: {
                 c__eventId: eventId

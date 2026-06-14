@@ -93,8 +93,12 @@
     flex-wrap: wrap;
 }
 
-.primaryBtn,
-.secondaryBtn {
+.detailPage .actions a.primaryBtn,
+.detailPage .actions a.primaryBtn:link,
+.detailPage .actions a.primaryBtn:visited {
+    background: #0f766e;
+    color: white;
+    border: 1px solid #0f766e;
     padding: 12px 20px;
     border-radius: 10px;
     text-decoration: none;
@@ -105,14 +109,36 @@
     text-align: center;
 }
 
-.primaryBtn {
-    background: #0f766e;
+.detailPage .actions a.primaryBtn:hover,
+.detailPage .actions a.primaryBtn:focus,
+.detailPage .actions a.primaryBtn:active {
+    background: #0b5f59;
     color: white;
+    text-decoration: none;
 }
 
-.secondaryBtn {
-    border: 1px solid #0f766e;
+.detailPage .actions a.secondaryBtn,
+.detailPage .actions a.secondaryBtn:link,
+.detailPage .actions a.secondaryBtn:visited {
+    background: white;
     color: #0f766e;
+    border: 1px solid #0f766e;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.detailPage .actions a.secondaryBtn:hover,
+.detailPage .actions a.secondaryBtn:focus,
+.detailPage .actions a.secondaryBtn:active {
+    background: #f0fdfa;
+    color: #0f766e;
+    text-decoration: none;
 }
 
 @media (max-width: 1024px) {
